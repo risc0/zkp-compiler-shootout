@@ -10,11 +10,8 @@ edition = "2021"
 [dependencies]
 zero-knowledge = { path = "../zero-knowledge" }
 methods-fib = { path = "methods" }
-risc0-zkvm-core = "0.10"
-risc0-zkvm-host = "0.10"
-risc0-zkvm-serde = "0.10"
-serde = "1.0"
-num-primes = "0.3.0"
-num-bigint = "0.4.3"
-num-traits = "0.2.15"
+risc0-zkvm = { git = "ssh://git@github.com/risc0/risczero-wip.git", branch = "flaub/commit-codegen" }
 sudoku-core = { path = "sudoku-core" }
+
+[features]
+cuda = ["risc0-zkvm/cuda"]

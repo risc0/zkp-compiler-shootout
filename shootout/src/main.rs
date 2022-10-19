@@ -4,8 +4,9 @@ mod halo;
 mod miden;
 mod plonk;
 mod risc;
-use ::risc::{FIB_FIFTY_ID, FIB_FIFTY_PATH, FIB_NINTY_TWO_ID, FIB_NINTY_TWO_PATH};
 use bench::*;
+use ::risc::{FIB_FIFTY_ID, FIB_FIFTY_PATH, FIB_NINETY_TWO_ID, FIB_NINETY_TWO_PATH};
+
 ////////////////////////////////////////
 // Hello, you can place your benchmarks
 // in each `bench_*` to_bench's vector,
@@ -36,8 +37,8 @@ pub fn bench_fib(c: &mut Criterion) {
         )),
         ZKP::Risc0(risc::fib_fixed(
             String::from("92"),
-            FIB_NINTY_TWO_ID,
-            FIB_NINTY_TWO_PATH,
+            FIB_NINETY_TWO_ID,
+            FIB_NINETY_TWO_PATH,
         )),
     ];
     let to_bench_large = vec![

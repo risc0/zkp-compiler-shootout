@@ -2,19 +2,20 @@
 #![no_main]
 #![feature(slice_flatten)]
 
+use risc0_zkp::core::sha::Sha;
 use risc0_zkvm_guest::{env, sha};
 use sudoku_core::Sudoku;
+
 risc0_zkvm_guest::entry!(main);
 
-
 pub fn main() {
-    let mut puzzle: Sudoku = env::read();
+    let puzzle: Sudoku = env::read();
 
-    if !valid_solution(&puzzle){
-         panic!("invalid solution");
-    }
-    else {
-        let solution_hash = sha::digest_u8_slice(&puzzle.0.flatten());
+    if !valid_solution(&puzzle) {
+        panic!("invalid solution");
+    } else {
+        let sha = sha::Impl {};
+        let solution_hash = sha.hash_bytes(&puzzle.0.flatten());
         env::commit(&solution_hash);
     }
 }

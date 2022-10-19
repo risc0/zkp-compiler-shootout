@@ -8,7 +8,7 @@ pub struct Miden {
     pub path: String,
     pub name: String,
     pub input: Vec<u64>,
-    pub advice: Vec<u64>
+    pub advice: Vec<u64>,
 }
 
 impl zero_knowledge::ZeroKnowledge for Miden {
@@ -22,7 +22,7 @@ impl zero_knowledge::ZeroKnowledge for Miden {
         compile(Path::new(&self.path)).unwrap()
     }
 
-    fn prove(&self, program : &Program) -> Self::R {
+    fn prove(&self, program: &mut Program) -> Self::R {
         let inputs = inputs(&self.input, &self.advice).unwrap();
         prove(program, &inputs).unwrap()
     }

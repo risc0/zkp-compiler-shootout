@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [build-dependencies]
-risc0-build = "0.10"
+risc0-build = { git = "ssh://git@github.com/risc0/risczero-wip.git", branch = "flaub/commit-codegen" }
 
 [package.metadata.risc0]
 methods = ["guest"]

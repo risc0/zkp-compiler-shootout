@@ -4,7 +4,7 @@ use halo2_proofs::{arithmetic::FieldExt, plonk::Error};
 use pasta_curves::pallas;
 use rand::rngs::OsRng;
 
-use crate::sudoku::{Circuit, VerifyingKey, ProvingKey, Proof};
+use crate::sudoku::{Circuit, Proof, ProvingKey, VerifyingKey};
 
 pub mod circuit;
 pub mod sudoku;
@@ -21,19 +21,18 @@ impl zero_knowledge::ZeroKnowledge for Circuit {
         (ProvingKey::build(), VerifyingKey::build())
     }
 
-    fn prove(&self, (pk,_vk): &Self::C) -> Self::R {
+    fn prove(&self, (pk, _vk): &mut Self::C) -> Self::R {
         let public_input = &[pallas::Base::from_u128(45 as u128); 27];
         Proof::create(&pk, self.clone(), &[public_input], &mut OsRng).unwrap()
     }
 
-    fn verify(&self, proof: Self::R, (_pk,vk): &Self::C) {
+    fn verify(&self, proof: Self::R, (_pk, vk): &Self::C) {
         let public_input = &[pallas::Base::from_u128(45 as u128); 27];
         proof.verify(&vk, &[public_input]).unwrap();
     }
 }
 
-pub fn prove_and_verify() ->  Result<(), Error> {
-
+pub fn prove_and_verify() -> Result<(), Error> {
     let time = Instant::now();
 
     let sudoku = [
@@ -60,7 +59,10 @@ pub fn prove_and_verify() ->  Result<(), Error> {
     let pk = ProvingKey::build();
     let vk = VerifyingKey::build();
 
-    println!("key generation: \t{:?}ms",(Instant::now() - time).as_millis());
+    println!(
+        "key generation: \t{:?}ms",
+        (Instant::now() - time).as_millis()
+    );
 
     // Prover POV
     let time = Instant::now();
@@ -74,6 +76,9 @@ pub fn prove_and_verify() ->  Result<(), Error> {
 
     let res = proof.verify(&vk, &[public_input]);
 
-    println!("verification: \t\t{:?}ms", (Instant::now() - time).as_millis());
+    println!(
+        "verification: \t\t{:?}ms",
+        (Instant::now() - time).as_millis()
+    );
     res
 }
