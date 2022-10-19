@@ -8,10 +8,14 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-zero-knowledge = { path = "../zero-knowledge" }
+env_logger = "0.9"
 methods-fib = { path = "methods" }
 risc0-zkvm = { git = "ssh://git@github.com/risc0/risczero-wip.git", branch = "flaub/commit-codegen" }
 sudoku-core = { path = "sudoku-core" }
+tracing = "0.1"
+tracing-forest = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+zero-knowledge = { path = "../zero-knowledge" }
 
 [features]
 cuda = ["risc0-zkvm/cuda"]

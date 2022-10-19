@@ -28,6 +28,7 @@ impl zero_knowledge::ZeroKnowledge for Risc {
         prover
     }
 
+    #[tracing::instrument(skip_all)]
     fn prove(&self, setup: &mut Self::C) -> Self::R {
         setup.run().unwrap()
     }
